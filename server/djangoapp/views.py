@@ -1,3 +1,4 @@
+from audioop import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
@@ -28,9 +29,25 @@ def contact(request):
     return render(request,'djangoapp/contact.html')
 
 # Create a `login_request` view to handle sign in request
-# def login_request(request):
-# ...
+def login_request(request):
+    if request.method == "POST":
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
 
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "djangoapp/login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+        return render(request, "djangoapp/login.html")
+    
+    
 # Create a `logout_request` view to handle sign out request
 # def logout_request(request):
 # ...
@@ -41,7 +58,7 @@ def contact(request):
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
-    context = {}
+    context = get_dealers_from_cf
     if request.method == "GET":
         return render(request, 'djangoapp/index.html', context)
 
