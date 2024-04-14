@@ -2,7 +2,7 @@ certifi==2021.5.30
 charset-normalizer==2.0.4
 ibm-cloud-sdk-core==3.10.0
 ibmcloudant==0.0.34
-idna==3.2
+idna==3.7
 jproperties==2.1.1
 PyJWT==2.1.0
 python-dateutil==2.8.2
